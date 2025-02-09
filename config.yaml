@@ -1,0 +1,4 @@
+project:
+  name: "demiurge"
+deployment:
+  namespace: "demiurge"

@@ -1,11 +1,15 @@
 RELEASE_NAME := $(shell yq '.name' release/Chart.yaml)
 RELEASE_VERSION := $(shell yq '.appVersion' release/Chart.yaml)
 RELEASE_IMG := ${RELEASE_NAME}:${RELEASE_VERSION}
-RELEASE_NAMESPACE := "demiurge"
+RELEASE_NAMESPACE := $(shell yq '.deployment.namespace' ../config.yaml)
 RELEASE_PKG := ${RELEASE_NAME}-${RELEASE_VERSION}.tgz
 
-${RELEASE_PKG}:
+.PHONY: image clean uninstall
+
+image:
 	docker build -t ${RELEASE_IMG} -f images/Dockerfile .
+
+${RELEASE_PKG}: image
 	helm package release
 
 release: ${RELEASE_PKG}
