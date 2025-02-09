@@ -1,0 +1,6 @@
+deployment:
+  replicaCount: 1
+  port: 80
+service:
+  port: 80
+
