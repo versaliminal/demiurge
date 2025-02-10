@@ -1,0 +1,57 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: universal-correlator-health
+  description: Health APIs for universal correlator
+paths:
+  /health:
+    get:
+      summary: Returns a health summary
+      operationId: health
+      parameters:
+        - name: component
+          in: query
+          description: The component to return health for
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Healthy response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HealthState'
+        default:
+          description: Unhealthy response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    HealthState:
+      required:
+        - name
+        - summary
+      properties:
+        name:
+          type: string
+          description: Name of the component
+        summary:
+          type: string
+          description: Health summary
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error message

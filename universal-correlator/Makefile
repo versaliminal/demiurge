@@ -4,9 +4,15 @@ RELEASE_IMG := ${RELEASE_NAME}:${RELEASE_VERSION}
 RELEASE_NAMESPACE := $(shell yq '.deployment.namespace' ../config.yaml)
 RELEASE_PKG := ${RELEASE_NAME}-${RELEASE_VERSION}.tgz
 
-.PHONY: image clean uninstall
+.PHONY: openapi image clean uninstall
 
-image:
+openapi:
+	cd source && go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config ../openapi/health/config.yaml ../openapi/health/spec.yaml
+
+local-build: openapi
+	cd source && go build -o ../uc main.go
+
+image: openapi
 	docker build -t ${RELEASE_IMG} -f images/Dockerfile .
 
 ${RELEASE_PKG}: image

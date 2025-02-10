@@ -27,3 +27,6 @@ go.work.sum
 # Archives
 *.tar.gz
 *.tgz
+
+#Generated files
+*.gen.go

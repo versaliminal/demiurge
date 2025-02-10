@@ -1,4 +1,4 @@
-FROM golang:1.18-bullseye as build-image
+FROM golang:1.23-bookworm as build-image
 
 RUN adduser \
   --disabled-password \
@@ -15,7 +15,7 @@ COPY ./source/ ./
 RUN go mod download
 RUN go mod verify
 
-RUN go build -o /uc .
+RUN go build -o /uc main.go
 
 USER min-user:min-user
 

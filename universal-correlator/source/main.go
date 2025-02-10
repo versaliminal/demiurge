@@ -1,14 +1,16 @@
 package main
 
 import (
+	"demiurge/universal-correlator/api"
 	"fmt"
-	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	fmt.Println("Starting universal correlator")
-	for true {
-		fmt.Print(".")
-		time.Sleep(5 * time.Second)
-	}
+	router := gin.Default()
+	server := api.NewServer()
+	api.RegisterHandlers(router, server)
+	router.Run()
 }
