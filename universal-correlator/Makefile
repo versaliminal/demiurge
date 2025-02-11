@@ -6,9 +6,6 @@ RELEASE_PKG := ${RELEASE_NAME}-${RELEASE_VERSION}.tgz
 
 .PHONY: openapi image clean uninstall docs test
 
-deps:
-	cd ../internal && go get ./...
-
 openapi:
 	cd source/api && go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config ../../openapi/health/config.yaml ../../openapi/health/spec.yaml
 
