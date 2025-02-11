@@ -15,7 +15,7 @@ COPY ./source/ ./
 RUN go mod download
 RUN go mod verify
 
-RUN CGO_ENABLED=0 go build -o /uc main.go
+RUN CGO_ENABLED=0 go build -o /uc .
 
 FROM gcr.io/distroless/static-debian12:debug
 

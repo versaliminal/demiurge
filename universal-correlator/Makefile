@@ -7,10 +7,10 @@ RELEASE_PKG := ${RELEASE_NAME}-${RELEASE_VERSION}.tgz
 .PHONY: openapi image clean uninstall docs
 
 openapi:
-	cd source && go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config ../openapi/health/config.yaml ../openapi/health/spec.yaml
+	cd source/api && go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config ../../openapi/health/config.yaml ../../openapi/health/spec.yaml
 
 local-build: openapi
-	cd source && go build -o ../uc main.go
+	cd source && go build -o ../uc .
 
 image: openapi
 	docker build -t ${RELEASE_IMG} -f images/Dockerfile .
@@ -27,7 +27,8 @@ uninstall:
 	helm uninstall ${RELEASE_NAME} -n ${RELEASE_NAMESPACE}
 
 clean:
-	docker rmi  ${RELEASE_IMG}
+	docker rm `docker ps -q -f status=exited`
+	docker rmi ${RELEASE_IMG}
 	rm ${RELEASE_PKG}
 
 docs:

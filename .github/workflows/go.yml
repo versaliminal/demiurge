@@ -21,8 +21,10 @@ jobs:
       with:
         go-version: '1.20'
 
-    - name: Build
-      run: go build -v ./...
+    - name: Build UC
+      working-directory: ./universal-correlator/source
+      run: go build -v .
 
-    - name: Test
-      run: go test -v ./...
+    - name: Test UC
+      working-directory: ./universal-correlator/source
+      run: go test -v .
