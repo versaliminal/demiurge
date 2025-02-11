@@ -23,8 +23,8 @@ jobs:
 
     - name: Build UC
       working-directory: ./universal-correlator/source
-      run: go build -v .
+      run: go build -v ./...
 
     - name: Test UC
       working-directory: ./universal-correlator/source
-      run: go test -v .
+      run: go test -v ./...
