@@ -21,6 +21,14 @@ jobs:
       with:
         go-version: '1.23'
 
+    - name: Install tools
+      working-drectory: ./internal
+      run: go get -d ./...
+
+    - name: Generate OpenAPI
+      working-directory: ./universal-correlator
+      run: make openapi
+
     - name: Build UC
       working-directory: ./universal-correlator/source
       run: go build -v ./...
