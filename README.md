@@ -1,5 +1,5 @@
 # demiurge
-TODO
+A dev exploration project
 
 ## Prerequisites
 1. Install docker and kubernetes locally (rancher, kind, docker desktop, etc.)
@@ -8,4 +8,6 @@ TODO
 ## Components
 
 ### Univeral Correlator
-TODO
+A universal event aggregator
+
+[API Documentation](./docs/README.md)

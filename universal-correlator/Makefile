@@ -4,7 +4,7 @@ RELEASE_IMG := ${RELEASE_NAME}:${RELEASE_VERSION}
 RELEASE_NAMESPACE := $(shell yq '.deployment.namespace' ../config.yaml)
 RELEASE_PKG := ${RELEASE_NAME}-${RELEASE_VERSION}.tgz
 
-.PHONY: openapi image clean uninstall
+.PHONY: openapi image clean uninstall docs
 
 openapi:
 	cd source && go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config ../openapi/health/config.yaml ../openapi/health/spec.yaml
@@ -29,3 +29,6 @@ uninstall:
 clean:
 	docker rmi  ${RELEASE_IMG}
 	rm ${RELEASE_PKG}
+
+docs:
+	openapi-generator generate -g markdown -i openapi/health/spec.yaml -o docs

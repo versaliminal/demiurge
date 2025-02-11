@@ -1,11 +1,13 @@
 openapi: "3.0.0"
 info:
-  version: 1.0.0
+  version: 0.1.0
   title: universal-correlator-health
   description: Health APIs for universal correlator
 paths:
   /health:
     get:
+      tags:
+        - health
       summary: Returns a health summary
       operationId: health
       parameters:
