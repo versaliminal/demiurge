@@ -8,6 +8,6 @@ A dev exploration project
 ## Components
 
 ### Univeral Correlator
-A universal event aggregator
+A universal event aggregator written in golang
 
-[API Documentation](./docs/README.md)
+- [API Documentation](./universal-correlator/docs/README.md)
