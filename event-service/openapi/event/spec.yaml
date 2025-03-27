@@ -1,0 +1,121 @@
+openapi: "3.0.0"
+info:
+  version: 0.1.0
+  title: event-object
+  description: Defines standard event object and APIs
+paths:
+  /events:
+    get:
+      tags:
+        - events
+      summary: Returns all events
+      operationId: get-events
+      parameters:
+        - name: component
+          in: query
+          description: The component to return events for
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Healthy response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        default:
+          description: Unhealthy response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Event:
+      required:
+        - name
+        - summary
+      properties:
+        metadata:
+          type: object
+          description: Metadata for the event
+          properties:
+            time:
+              type: integer
+              format: unix-timestamp
+              description: The time this event was genrated
+            id:
+              type: string
+              description: The unique id for the event
+            type:
+              type: string
+              description: The type of the event
+        lcm:
+          type: object
+          description: LCM data for the event
+          properties:
+            lcm_id:
+              type: integer
+              description: The id used to associate events with LCM
+            start_time:
+              type: integer
+              format: unix-timestamp
+              description: The start time for events with LCM
+            end_time:
+              type: integer
+              format: unix-timestamp
+              description: The end time for events with LCM
+        env:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The id for this environment
+            composite_id:
+              type: string
+              description: A hash of all resource ids for this environment
+            resources:
+              type: array
+              description: A list of resources which are associated with the event
+              items:
+                anyOf:
+                  $ref: "#components/schemas/Node"
+                  $ref: "#components/schemas/Service"
+    Node:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: The unique id for the node
+        ipv4:
+          type: string
+          description: The primary IPv4 for the node
+        ipv6:
+          type: string
+          description: The primary IPv6 for the nodes
+    Service:
+      required:
+        - id
+      properies:
+        id:
+          type: string
+          description: The unique id for the service
+        pod_id:
+          type: string
+          description: The unique id for the pod or instance of a distributed service
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error message 
