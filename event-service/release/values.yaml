@@ -2,5 +2,5 @@ deployment:
   replicaCount: 1
   port: 8080
 service:
-  port: 8002
+  port: 8001
 

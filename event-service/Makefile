@@ -12,8 +12,8 @@ openapi:
 source/uc: openapi
 	cd source && go build -o ../eventsvc .
 
-local-build: source/eventsvc
-	true
+local-build:
+	cd source && go build -o eventsvc .
 
 test:
 	cd source && go test -v ./...

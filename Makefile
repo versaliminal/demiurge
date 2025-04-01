@@ -1,7 +1,4 @@
-.PHONY: deps uc eventsvc
-
-deps:
-	cd internal && go get ./...
+.PHONY: uc eventsvc
 
 uc:
 	cd universal-correlator && $(MAKE) image
