@@ -32,8 +32,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    /event:
+      get:
+        tags:
+          - events/{event_id}
+        summary: Returns a single event by id
+        operationId: get-events
+        parameters:
+          - name: event_id
+            in: path
+            description: The id of the event to return
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Healthy response
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Event'
+          default:
+            description: Unhealthy response
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Node:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: The unique id for the node
+        ipv4:
+          type: string
+          description: The primary IPv4 for the node
+        ipv6:
+          type: string
+          description: The primary IPv6 for the nodes
+    Service:
+      required:
+        - id
+      properies:
+        id:
+          type: string
+          description: The unique id for the service
+        pod_id:
+          type: string
+          description: The unique id for the pod or instance of a distributed service
     Event:
       required:
         - name
@@ -53,6 +102,9 @@ components:
             type:
               type: string
               description: The type of the event
+            description:
+              type: string
+              description: The description for the event
         lcm:
           type: object
           description: LCM data for the event
@@ -82,31 +134,10 @@ components:
               description: A list of resources which are associated with the event
               items:
                 anyOf:
-                  $ref: "#components/schemas/Node"
-                  $ref: "#components/schemas/Service"
-    Node:
-      required:
-        - id
-      properties:
-        id:
-          type: string
-          description: The unique id for the node
-        ipv4:
-          type: string
-          description: The primary IPv4 for the node
-        ipv6:
-          type: string
-          description: The primary IPv6 for the nodes
-    Service:
-      required:
-        - id
-      properies:
-        id:
-          type: string
-          description: The unique id for the service
-        pod_id:
-          type: string
-          description: The unique id for the pod or instance of a distributed service
+                  - $ref: "#/components/schemas/Node"
+                  - $ref: "#/components/schemas/Service"
+        data:
+          type: object
     Error:
       required:
         - code
