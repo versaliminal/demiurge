@@ -16,7 +16,7 @@ func NewServer() Server {
 }
 
 // (GET /events)
-func (Server) Events(ctx *gin.Context, params GetEventsParams) {
+func (Server) GetEvents(ctx *gin.Context, params GetEventsParams) {
 	fmt.Println("Events API called")
 	resp := Event{}
 	ctx.JSON(http.StatusOK, resp)
