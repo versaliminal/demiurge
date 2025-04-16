@@ -3,8 +3,9 @@ RELEASE_VERSION := $(shell yq '.appVersion' release/Chart.yaml)
 RELEASE_IMG := ${RELEASE_NAME}:${RELEASE_VERSION}
 RELEASE_NAMESPACE := $(shell yq '.deployment.namespace' ../config.yaml)
 RELEASE_PKG := ${RELEASE_NAME}-${RELEASE_VERSION}.tgz
+DB_PASS ?= $(shell bash -c 'read -s -p "Events DB Password: " pwd; echo $$pwd')
 
-.PHONY: openapi image clean uninstall docs test
+.PHONY: openapi image clean uninstall docs test migration
 
 openapi:
 	cd source/api && go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config ../../openapi/event/config.yaml ../../openapi/event/spec.yaml
@@ -27,7 +28,10 @@ ${RELEASE_PKG}: image
 release: ${RELEASE_PKG}
 
 install: release
-	helm install ${RELEASE_NAME} ${RELEASE_PKG} -n ${RELEASE_NAMESPACE} --create-namespace
+	helm upgrade --install ${RELEASE_NAME} ${RELEASE_PKG} -n ${RELEASE_NAMESPACE} --create-namespace
+
+init-migration:
+	cd atlas && atlas migrate diff initial --to "file://schema.hcl" --dev-url "postgres://eventuser:${DB_PASS}@localhost:5432/event-db?sslmode=disable"
 
 uninstall:
 	helm uninstall ${RELEASE_NAME} -n ${RELEASE_NAMESPACE}

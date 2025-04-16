@@ -67,12 +67,31 @@ components:
         id:
           type: string
           description: The unique id for the node
-        ipv4:
+        name:
+          type: string
+          description: The name of the node
+        machine_id:
+          type: string
+          description: The machine id of the node
+        primary_ipv4:
           type: string
           description: The primary IPv4 for the node
-        ipv6:
+        primary_ipv6:
           type: string
           description: The primary IPv6 for the nodes
+        addresses:
+          type: array
+          description: All addresses associated with this node
+          items:
+            type: string
+        labels:
+          type: array
+          description: All labels associated with the node
+          itmes:
+            type: string
+        raw:
+          type: object
+          description: Raw additional information for the node
     Service:
       required:
         - id
@@ -123,10 +142,10 @@ components:
         env:
           type: object
           properties:
-            id:
+            name:
               type: string
               description: The id for this environment
-            composite_id:
+            key:
               type: string
               description: A hash of all resource ids for this environment
             resources:
