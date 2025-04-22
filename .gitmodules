@@ -1,3 +1,0 @@
-[submodule "upstream/traefik"]
-	path = upstream/traefik
-	url = https://github.com/traefik/traefik.git
