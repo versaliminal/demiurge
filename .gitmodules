@@ -1,6 +1,3 @@
-[submodule "upstream/traefik-helm-chart"]
-	path = upstream/traefik-helm-chart
-	url = https://github.com/traefik/traefik-helm-chart.git
 [submodule "upstream/summarization-engine"]
 	path = upstream/summarization-engine
 	url = git@github.com:DevTrav/summarization-engine.git
