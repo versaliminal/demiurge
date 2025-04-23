@@ -1,0 +1,8 @@
+repo:
+  url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+  name: zalando-pg-operator-charts
+deployment:
+  release: pg-operator
+  version: 1.14.0
+  namespace: zalando
+  path: postgres-operator

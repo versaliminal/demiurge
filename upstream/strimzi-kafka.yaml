@@ -1,0 +1,5 @@
+deployment:
+  release: kafka
+  version: 0.45.0
+  namespace: kafka
+  oci: oci://quay.io/strimzi-helm/strimzi-kafka-operator
