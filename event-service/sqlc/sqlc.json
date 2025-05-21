@@ -1,12 +1,19 @@
 {
     "version": "2",
     "sql": [{
-      "schema": "schema.sql",
-      "queries": "query.sql",
+      "schema": "../source/sql/schema.sql",
+      "queries": [
+        "environments.sql",
+        "events.sql",
+        "joins.sql",
+        "nodes.sql",
+        "services.sql"
+      ],
       "engine": "postgresql",
       "gen": {
         "go": {
-          "out": "events_db"
+          "package": "events_db",
+          "out": "../source/events_db"
         }
       }
     }]

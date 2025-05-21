@@ -5,12 +5,15 @@ RELEASE_NAMESPACE := $(shell yq '.deployment.namespace' ../config.yaml)
 RELEASE_PKG := ${RELEASE_NAME}-${RELEASE_VERSION}.tgz
 DB_PASS ?= $(shell bash -c 'read -s -p "Events DB Password: " pwd; echo $$pwd')
 
-.PHONY: openapi image clean uninstall docs test migration
+.PHONY: openapi image clean uninstall docs test migration sqlc
 
 openapi:
 	cd source/api && go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config ../../openapi/event/config.yaml ../../openapi/event/spec.yaml
 
-source/uc: openapi
+sqlc:
+	cd sqlc && sqlc generate
+
+source/uc: openapi sqlc
 	cd source && go build -o ../eventsvc .
 
 local-build:
@@ -42,4 +45,4 @@ clean:
 	rm ${RELEASE_PKG}
 
 docs:
-	openapi-generator generate -g markdown -i openapi/health/spec.yaml -o docs
+	openapi-generator generate -g markdown -i openapi/event/spec.yaml -o docs

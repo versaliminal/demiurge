@@ -2,6 +2,7 @@ package main
 
 import (
 	"demiurge/event-service/api"
+	_ "embed"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
